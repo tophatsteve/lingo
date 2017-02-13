@@ -34,6 +34,11 @@ var matrix2 = Matrix{
 	{4, 5},
 }
 
+var matrix3 = Matrix{
+	{1, 2, 3},
+	{2, 4, 5},
+}
+
 func TestRows(t *testing.T) {
 	assert.Equal(t, 2, matrix1.Rows(), "Number of rows should be 2")
 }
@@ -77,4 +82,9 @@ func TestMultiply(t *testing.T) {
 		assert.Equal(t, float64(v[2]), val, fmt.Sprintf("Value at position (%v, %v) should be %v", v[0], v[1], v[2]))
 		assert.Equal(t, nil, err, "error should be nil")
 	}
+}
+
+func TestMultiplyIncompatible(t *testing.T) {
+	_, err := matrix1.Multiply(matrix3)
+	assert.Equal(t, errors.New("incompatible matrices"), err, "error should be 'incompatible matrices'")
 }
