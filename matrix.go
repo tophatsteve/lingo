@@ -13,7 +13,15 @@ func (m Matrix) Add(o Matrix) (Matrix, error) {
 		return nil, errors.New("incompatible matrices")
 	}
 
-	return nil, nil
+	r := newZeroMatrix(m.Rows(), m.Columns())
+
+	for mRows := 0; mRows < m.Rows(); mRows++ {
+		for mCols := 0; mCols < m.Columns(); mCols++ {
+			r[mRows][mCols] = m[mRows][mCols] + o[mRows][mCols]
+		}
+	}
+
+	return r, nil
 }
 
 func (m Matrix) Subtract(o Matrix) (Matrix, error) {
@@ -21,7 +29,15 @@ func (m Matrix) Subtract(o Matrix) (Matrix, error) {
 		return nil, errors.New("incompatible matrices")
 	}
 
-	return nil, nil
+	r := newZeroMatrix(m.Rows(), m.Columns())
+
+	for mRows := 0; mRows < m.Rows(); mRows++ {
+		for mCols := 0; mCols < m.Columns(); mCols++ {
+			r[mRows][mCols] = m[mRows][mCols] - o[mRows][mCols]
+		}
+	}
+
+	return r, nil
 }
 
 func (m Matrix) Multiply(o Matrix) (Matrix, error) {
@@ -44,8 +60,16 @@ func (m Matrix) Multiply(o Matrix) (Matrix, error) {
 }
 
 // Scale multiplies a matrix by a scalar value
-func (m Matrix) Scale(scalar float64) (Matrix, error) {
-	return nil, nil
+func (m Matrix) Scale(scalar float64) Matrix {
+	r := newZeroMatrix(m.Rows(), m.Columns())
+
+	for mRows := 0; mRows < m.Rows(); mRows++ {
+		for mCols := 0; mCols < m.Columns(); mCols++ {
+			r[mRows][mCols] = m[mRows][mCols] * scalar
+		}
+	}
+
+	return r
 }
 
 // Print writes the matrix to stdout
