@@ -72,6 +72,18 @@ func (m Matrix) Scale(scalar float64) Matrix {
 	return r
 }
 
+func (m Matrix) Transpose() Matrix {
+	r := newZeroMatrix(m.Columns(), m.Rows())
+
+	for mRows := 0; mRows < m.Rows(); mRows++ {
+		for mCols := 0; mCols < m.Columns(); mCols++ {
+			r[mCols][mRows] = m[mRows][mCols]
+		}
+	}
+
+	return r
+}
+
 // Print writes the matrix to stdout
 func (m Matrix) Print() {
 	// print the matrix
