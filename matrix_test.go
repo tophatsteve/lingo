@@ -68,7 +68,7 @@ func TestValueAtPositionInvalidColumn(t *testing.T) {
 }
 
 func TestMultiply(t *testing.T) {
-	m, err := matrix1.Multiply(matrix2)
+	m, err := Multiply(matrix1, matrix2)
 	assert.Equal(t, nil, err, "error should be nil")
 
 	e := Matrix{
@@ -86,12 +86,12 @@ func TestMultiply(t *testing.T) {
 }
 
 func TestMultiplyIncompatible(t *testing.T) {
-	_, err := matrix1.Multiply(matrix3)
+	_, err := Multiply(matrix1, matrix3)
 	assert.Equal(t, errors.New("incompatible matrices"), err, "error should be 'incompatible matrices'")
 }
 
 func TestAdd(t *testing.T) {
-	m, _ := matrix1.Add(matrix3)
+	m, _ := Add(matrix1, matrix3)
 	e := Matrix{
 		{4, 7, 4},
 		{6, 8, 8},
@@ -107,12 +107,12 @@ func TestAdd(t *testing.T) {
 }
 
 func TestAddIncompatible(t *testing.T) {
-	_, err := matrix1.Add(matrix2)
+	_, err := Add(matrix1, matrix2)
 	assert.Equal(t, errors.New("incompatible matrices"), err, "error should be 'incompatible matrices'")
 }
 
 func TestSubtract(t *testing.T) {
-	m, _ := matrix3.Subtract(matrix1)
+	m, _ := Subtract(matrix3, matrix1)
 	e := Matrix{
 		{2, 3, -2},
 		{2, 0, -2},
@@ -128,12 +128,12 @@ func TestSubtract(t *testing.T) {
 }
 
 func TestSubtractIncompatible(t *testing.T) {
-	_, err := matrix1.Subtract(matrix2)
+	_, err := Subtract(matrix1, matrix2)
 	assert.Equal(t, errors.New("incompatible matrices"), err, "error should be 'incompatible matrices'")
 }
 
 func TestScale(t *testing.T) {
-	m := matrix1.Scale(4)
+	m := Scale(matrix1, 4)
 	e := Matrix{
 		{4, 8, 12},
 		{8, 16, 20},
@@ -149,7 +149,7 @@ func TestScale(t *testing.T) {
 }
 
 func TestTranspose(t *testing.T) {
-	m := matrix1.Transpose()
+	m := Transpose(matrix1)
 	e := Matrix{
 		{1, 2},
 		{2, 4},
