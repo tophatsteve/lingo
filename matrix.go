@@ -58,8 +58,8 @@ func (m Matrix) Dimensions() (int, int) {
 	return m.Rows(), m.Columns()
 }
 
-// Add adds two matrices together. An error is returned if
-// the matrices are not compatible sizes.
+// Add adds two matrices together
+// An error is returned if the matrices are not compatible sizes.
 func Add(m, o Matrix) (Matrix, error) {
 	if !matchSize(m, o) {
 		return nil, errors.New("incompatible matrices")
@@ -76,8 +76,8 @@ func Add(m, o Matrix) (Matrix, error) {
 	return r, nil
 }
 
-// Subtract subtracts one matrix from another. An error is returned if
-// the matrices are not compatible sizes.
+// Subtract subtracts one matrix from another.
+// An error is returned if the matrices are not compatible sizes.
 func Subtract(m, o Matrix) (Matrix, error) {
 	if !matchSize(m, o) {
 		return nil, errors.New("incompatible matrices")
@@ -94,9 +94,27 @@ func Subtract(m, o Matrix) (Matrix, error) {
 	return r, nil
 }
 
-// Multiply multiples two matrices together. An error is returned if
-// the matrices are not compatible sizes.
+// Multiply carries out element-wise multiplication of two matrices.
+// An error is returned if the matrices are not compatible sizes.
 func Multiply(m, o Matrix) (Matrix, error) {
+	if !matchSize(m, o) {
+		return nil, errors.New("incompatible matrices")
+	}
+
+	r := newZeroMatrix(m.Rows(), m.Columns())
+
+	for mRows := 0; mRows < m.Rows(); mRows++ {
+		for mCols := 0; mCols < m.Columns(); mCols++ {
+			r[mRows][mCols] = m[mRows][mCols] * o[mRows][mCols]
+		}
+	}
+
+	return r, nil
+}
+
+// Dot calculates the dot product of two matrices.
+// An error is returned if the matrices are not compatible sizes.
+func Dot(m, o Matrix) (Matrix, error) {
 	if m.Columns() != o.Rows() {
 		return nil, errors.New("incompatible matrices")
 	}

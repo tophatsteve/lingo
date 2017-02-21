@@ -67,8 +67,8 @@ func TestValueAtPositionInvalidColumn(t *testing.T) {
 	assert.Equal(t, errors.New("value does not exist"), err, "error should be 'value does not exist'")
 }
 
-func TestMultiply(t *testing.T) {
-	m, err := Multiply(matrix1, matrix2)
+func TestDot(t *testing.T) {
+	m, err := Dot(matrix1, matrix2)
 	assert.Equal(t, nil, err, "error should be nil")
 
 	e := Matrix{
@@ -85,8 +85,8 @@ func TestMultiply(t *testing.T) {
 	}
 }
 
-func TestMultiplyIncompatible(t *testing.T) {
-	_, err := Multiply(matrix1, matrix3)
+func TestDotIncompatible(t *testing.T) {
+	_, err := Dot(matrix1, matrix3)
 	assert.Equal(t, errors.New("incompatible matrices"), err, "error should be 'incompatible matrices'")
 }
 
@@ -129,6 +129,27 @@ func TestSubtract(t *testing.T) {
 
 func TestSubtractIncompatible(t *testing.T) {
 	_, err := Subtract(matrix1, matrix2)
+	assert.Equal(t, errors.New("incompatible matrices"), err, "error should be 'incompatible matrices'")
+}
+
+func TestMultiply(t *testing.T) {
+	m, _ := Multiply(matrix3, matrix1)
+	e := Matrix{
+		{3, 10, 3},
+		{8, 16, 15},
+	}
+
+	for row := range e {
+		for col := range e[row] {
+			val, err := m.Value(row, col)
+			assert.Equal(t, e[row][col], val, fmt.Sprintf("Value at position (%v, %v) should be %v", row, col, e[row][col]))
+			assert.Equal(t, nil, err, "error should be nil")
+		}
+	}
+}
+
+func TestMultiplyIncompatible(t *testing.T) {
+	_, err := Multiply(matrix1, matrix2)
 	assert.Equal(t, errors.New("incompatible matrices"), err, "error should be 'incompatible matrices'")
 }
 
