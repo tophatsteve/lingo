@@ -45,12 +45,29 @@ func (m Matrix) Value(row, column int) (float64, error) {
 
 // Row returns the specified row from the matrix
 func (m Matrix) Row(row int) ([]float64, error) {
-	return []float64{}, nil
+	if len(m)-1 < row {
+		return []float64{}, errors.New("row does not exist")
+	}
+	return m[row], nil
 }
 
 // Column returns the specified column from the matrix
 func (m Matrix) Column(column int) ([]float64, error) {
-	return []float64{}, nil
+	if len(m)-1 < 0 {
+		return []float64{}, errors.New("matrix has no rows")
+	}
+
+	if len(m[0])-1 < column {
+		return []float64{}, errors.New("column does not exist")
+	}
+
+	r := []float64{}
+
+	for x := range m {
+		r = append(r, m[x][column])
+	}
+
+	return r, nil
 }
 
 // Dimensions returns the number of row and columns in the matrix

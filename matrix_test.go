@@ -62,9 +62,54 @@ func TestValueAtPositionInvalidRow(t *testing.T) {
 }
 
 func TestValueAtPositionInvalidColumn(t *testing.T) {
-	val, err := matrix1.Value(2, 4)
+	val, err := matrix1.Value(1, 4)
 	assert.Equal(t, float64(0), val, "value should be 0")
 	assert.Equal(t, errors.New("value does not exist"), err, "error should be 'value does not exist'")
+}
+
+func TestRow(t *testing.T) {
+	e := []float64{2, 4, 5}
+	row, err := matrix1.Row(1)
+
+	assert.Equal(t, len(e), len(row), "row is not the correct length")
+
+	for i, v := range e {
+		assert.Equal(t, v, row[i], fmt.Sprintf("value '%v' should be '%v'", row[i], v))
+	}
+
+	assert.Equal(t, nil, err, "error should be nil")
+}
+
+func TestInvalidRow(t *testing.T) {
+	row, err := matrix1.Row(2)
+	assert.Equal(t, 0, len(row), "row length should be 0")
+	assert.Equal(t, errors.New("row does not exist"), err, "error should be 'row does not exist'")
+}
+
+func TestColumn(t *testing.T) {
+	e := []float64{3, 5}
+	col, err := matrix1.Column(2)
+
+	assert.Equal(t, len(e), len(col), "column is not the correct length")
+
+	for i, v := range e {
+		assert.Equal(t, v, col[i], fmt.Sprintf("value '%v' should be '%v'", col[i], v))
+	}
+
+	assert.Equal(t, nil, err, "error should be nil")
+}
+
+func TestInvalidColumn(t *testing.T) {
+	col, err := matrix1.Column(3)
+	assert.Equal(t, 0, len(col), "column length should be 0")
+	assert.Equal(t, errors.New("column does not exist"), err, "error should be 'column does not exist'")
+}
+
+func TestColumnNoRows(t *testing.T) {
+	m := Matrix{}
+	col, err := m.Column(0)
+	assert.Equal(t, 0, len(col), "column length should be 0")
+	assert.Equal(t, errors.New("matrix has no rows"), err, "error should be 'matrix has no rows'")
 }
 
 func TestDot(t *testing.T) {
