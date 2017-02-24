@@ -32,6 +32,11 @@ func TestColumns(t *testing.T) {
 	assert.Equal(t, 3, matrix1.Columns(), "Number of columns should be 3")
 }
 
+func TestColumnsEmptyMatrix(t *testing.T) {
+	m := Matrix{}
+	assert.Equal(t, 0, m.Columns(), "Number of columns should be 0")
+}
+
 func TestDimensions(t *testing.T) {
 	rows, columns := matrix1.Dimensions()
 	assert.Equal(t, 2, rows, "Number of rows should be 2")

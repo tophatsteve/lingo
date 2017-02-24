@@ -2,19 +2,10 @@ package lingo
 
 import (
 	"errors"
-	"fmt"
 )
 
 // Matrix represents a 2 dimensional matrix of float64
 type Matrix [][]float64
-
-// Print writes the matrix to stdout
-func (m Matrix) Print() {
-	// print the matrix
-	for _, row := range m {
-		fmt.Printf("%v\n", row)
-	}
-}
 
 // Rows returns the number of rows the matrix contains
 func (m Matrix) Rows() int {
